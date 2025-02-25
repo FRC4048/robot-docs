@@ -104,3 +104,28 @@ The `CommandLogger` works by subscribing to some of the events of WPILib's `Comm
 3. `onCommandInterupt(Consumer<Command> action)`
 
 On each of these events, we store the recorded state in a queue which then gets logged every tick.
+
+## Advanced Use cases
+
+Sometimes it is convenient to create and schedule and command within another command.
+
+Take the following example, where we create a command that goes to a position.
+
+```java
+public void initalize(){
+  LoggableCommand command = new GoToPoseCommand(drivetrain);
+  command.schedule();
+}
+```
+
+This will work but when we are looking for the command in AdvantageScope, it may make more sense to see the `GoToPoseCommand` listed under the command who called it.
+
+This can be done by calling `command.setParent(this)`.
+
+```java
+public void initalize(){
+  LoggableCommand command = new GoToPoseCommand(drivetrain);
+  command.setParent(this);
+  command.schedule();
+}
+```
