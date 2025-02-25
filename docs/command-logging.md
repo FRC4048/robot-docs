@@ -21,6 +21,14 @@
 !!! important
     Commands can not be reused. They can be scheduled multiple times, but they can not have multiple parents.
 
+## Customization
+
+By default, commands will be logged using their class name. Specifically, `class.getSimpleName()`.
+
+If you want to have a command with a different name you can call `command.setBasicName()`.
+
+Reasons for this may be if you have a command that is context dependant and want to easily differentiate between its use cases.
+
 ## How Command Logging works
 
 !!! note
