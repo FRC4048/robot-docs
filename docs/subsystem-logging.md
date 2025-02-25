@@ -134,3 +134,23 @@ class NeoPidMotorInputProvider{
 
 Starting off simple, all the `InputProvider` classes do is provide a common interface for retrieving motor information. This bridges the gab between different vendors as there is no common superclass.
 
+### Inputs
+
+Similar to Command Logging, we want to maintain a tree like structure for our Inputs. To do this, each Inputs extends `FolderLoggableInputs` which in turn extends `LoggableInputs`.
+
+`FolderLoggableInputs` takes in a folder that is describes the hardware it is logging. You can name this what ever you want but I would recommend just putting the class name of the subsystem.
+
+!!!note
+    This folder can have subfolders separated by a /
+
+So far it has been pretty simple, but how do we get to the different customizable inputs like `NeoPidMotorInputs` you may ask.
+
+There is another class that all the customizable Input classes extend, and that is `FolderInputs` (poorly named).
+
+All `FolderInputs` does is declare an abstract method called `process(InputProvider inputProvider)`.
+
+Ohhhh, I hear you say so that is where the `InputProvider` comes into play!
+
+The process method will then be called by IO Interfaces, with the corresponding `InputProvider`.
+
+As mentioned in [How to log a Subsystem](#how-to-log-a-subsystem), the two `FolderInputs` implementations are `MotorInputs` and `PidMotorInputs`.
