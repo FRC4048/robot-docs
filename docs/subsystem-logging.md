@@ -182,7 +182,6 @@ Starting off simple, all the `InputProvider` classes do is provide a common inte
 
 ### Inputs
 
-<<<<<<< HEAD
 Inputs contain the actual fields that are being logged.
 
 Similar to Command Logging, we want to maintain a tree like structure for our Inputs. To do this, each Inputs extends `FolderLoggableInputs` which in turn extends `LoggableInputs`.
