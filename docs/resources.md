@@ -3,12 +3,14 @@
 This is a guide of resources for FRC programming, and some other useful stuff. 
 
 ## WPIlib 
+WPIlib downloads (almost) everything you would need for FRC programming in WPIlib are included
 
 Installing WPIlib - https://docs.wpilib.org/en/stable/docs/zero-to-robot/step-2/wpilib-setup.html 
+
 WPIlib Documentation - https://docs.wpilib.org/en/stable/docs/zero-to-robot/introduction.html 
 
-WPIlib downloads (almost) everything you would need for FRC programming in WPIlib are included 
-- Advantage Scope(and AdvantageKit), which allows you to log, simulate and replay robot competitions, and actively monitor data during testing. 
+Included in WPIlib are:
+- Advantage Scope(and AdvantageKit), which allows you to log, simulate and replay robot matches, and actively monitor data and it's position on the field during testing.
 - VS Code, which includes a suite of WPIlib tools like `Build Robot Code`, `Deploy Robot Code` and `Simulate Robot Code` being the most widely used.
 !!! note
     VS Code (Microsoft Visual Studio Code) is the supported IDE for FRC - you can use something else but it will make your work more difficult. Also if you're doing any personal coding projects in VS Code it is recommended to download VS Code from https://code.visualstudio.com/, because extensions you might install can mess with WPIlib,
@@ -16,6 +18,8 @@ WPIlib downloads (almost) everything you would need for FRC programming in WPIli
 - Also, WPIlib downloads C++, Python and Java compilers onto your device - we use Java, but you can see these in VS Code as downloaded extensions.
 !!! warning
     Git is not downloaded with WPIlib, but you will need it, download it here https://git-scm.com/downloads, or through terminal, more on Git Later.
+!!! note
+    Game Tools specifically FRC Driver Station (and Shuffleboard, which in our case is now replaced by Elastic) are not included in WPIlib, you can download them from https://www.ni.com/en/support/downloads/drivers/download.frc-game-tools.html#553883, but they only run on x86 Windows, not Arm Windows, Mac or Linux.
 
 ## Pathplanner
 
@@ -33,6 +37,7 @@ Installing Git - https://git-scm.com/downloads
 - Git works like a tree where branches are created off of main (the trunk of the tree)
 
 `git pull` - pulls from the current version (the version on Github) of the branch you are on. 
+
 `git push` - pushes your changes to your branch making them viewable on github.
 
 ### Github
