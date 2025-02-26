@@ -20,7 +20,7 @@ AdvantageScope (Developed by FRC Team 6328), which can be used to log real time 
 - The FRC supported IDE, with WPIlib Integrations, allowing for native `Build Robot Code`, `Simulate Robot Code`, `Deploy Robot Code`, and other FRC and WPIlib specific things.
 
 #### Elastic and Shuffleboard
-- Elastic (Made by FRC Team 353) and Shuffleboard are both customizable tools for inputting and displaying information during a match or for testing purposes on a dashboard
+- Elastic (Made by FRC Team 353) and Shuffleboard are both customizable tools for inputting and displaying information during a match or for testing purposes on a dashboard.
     - Elastic Documentation -> https://frc-elastic.gitbook.io/docs
     - Shuffleboard Documentation -> https://docs.wpilib.org/en/stable/docs/software/dashboards/shuffleboard/index.html
 
