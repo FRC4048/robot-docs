@@ -25,7 +25,8 @@ The RealIO must have an `InputProvider` that matches the corresponding `Input` t
 `PidMotorInputs` :material-arrow-right: `PidMotorInputProvider`
 
 Then, in the `updateInputs(T inputs)`, you need to write `inputs.process(inputProvider)`
-Here is an bare bones example:
+
+Here is a bare-bones example:
 
 ```java
 public interface FooIO extends LoggableIO<MotorInputs> {
@@ -51,7 +52,7 @@ public class RealFooIO implements FooIO {
 ### Subsystem implementation
 
 !!! note
-    each IO collection should be in charge of at most one piece of hardware. However you may have multiple IO collection per Subsystem
+    each IO collection should be in charge of at most one piece of hardware. However you may have multiple IO collections per Subsystem
 
 In the Subsystem, IO interfaces and inputs are stored through a `LoggableSystem`. The `LoggableSystem` provides a consistent way of accessing both the IO interface's methods, and the Inputs.
 
