@@ -1,50 +1,42 @@
 # FRC Specific Resources
-
-This is a guide of resources for FRC programming, and some other useful stuff. 
+This is a guide of resources for FRC programming, and some other helpful stuff you might need.
 
 ## WPIlib 
-WPIlib downloads (almost) everything you would need for FRC programming in WPIlib are included
+An all in one package of tools and libraries used for FRC programming, developed by WPI.
+- Installing WPIlib -> https://docs.wpilib.org/en/stable/docs/zero-to-robot/step-2/wpilib-setup.html
+- WPIlib Documentation -> https://docs.wpilib.org/en/stable/docs/zero-to-robot/introduction.html
 
-Installing WPIlib - https://docs.wpilib.org/en/stable/docs/zero-to-robot/step-2/wpilib-setup.html 
+### Included in WPIlib
 
-WPIlib Documentation - https://docs.wpilib.org/en/stable/docs/zero-to-robot/introduction.html 
 
-Included in WPIlib are:
-- Advantage Scope(and AdvantageKit), which allows you to log, simulate and replay robot matches, and actively monitor data and it's position on the field during testing.
-- VS Code, which includes a suite of WPIlib tools like `Build Robot Code`, `Deploy Robot Code` and `Simulate Robot Code` being the most widely used.
-!!! note
-    VS Code (Microsoft Visual Studio Code) is the supported IDE for FRC - you can use something else but it will make your work more difficult. Also if you're doing any personal coding projects in VS Code it is recommended to download VS Code from https://code.visualstudio.com/, because extensions you might install can mess with WPIlib,
-- Elastic, software used for creating a dashboard that is used by the Drive-Team in competition.
-- Also, WPIlib downloads C++, Python and Java compilers onto your device - we use Java, but you can see these in VS Code as downloaded extensions.
+#### AdvantageScope + AdvantageKit
+AdvantageScope (Developed by FRC Team 6328), which can be used to log real time data of the robot during testing.
+    - AdvantageScope Documentation -> https://docs.advantagescope.org/
+- Advantage Kit (Also Developed by FRC Team 6328), is a code library used for logging and replaying matches.
+    - Advantage Kit Documentation -> https://docs.advantagekit.org/
+
+
+#### VS Code (Visual Studio Code)
+- The FRC supported IDE, with WPIlib Integrations, allowing for native `Build Robot Code`, `Simulate Robot Code`, `Deploy Robot Code`, and other FRC and WPIlib specific things.
+
+#### Elastic and Shuffleboard
+- Elastic (Made by FRC Team 353) and Shuffleboard are both customizable tools for inputting and displaying information during a match or for testing purposes on a dashboard
+    - Elastic Documentation -> https://frc-elastic.gitbook.io/docs
+    - Shuffleboard Documentation -> https://docs.wpilib.org/en/stable/docs/software/dashboards/shuffleboard/index.html
+
+## Not Included in WPIlib
+- Git, they easiest way to share locally written code to other people, in our case we use Github and every task get's assigned to a branch, which is later turned into a PR (Pull Request), which may be merged into Main.
+    - Git Download -> https://git-scm.com/downloads
+    - Git Documentation -> https://git-scm.com/doc
+
 !!! warning
-    Git is not downloaded with WPIlib, but you will need it, download it here https://git-scm.com/downloads, or through terminal, more on Git Later.
-!!! note
-    Game Tools specifically FRC Driver Station (and Shuffleboard, which in our case is now replaced by Elastic) are not included in WPIlib, you can download them from https://www.ni.com/en/support/downloads/drivers/download.frc-game-tools.html#553883, but they only run on x86 Windows, not Arm Windows, Mac or Linux.
+    You must download Git from https://git-scm.com/downloads or the terminal it is not included in WPIlib
 
-## Pathplanner
+### Additional Tools
 
-Installing Pathplanner - https://github.com/mjansen4857/pathplanner/releases 
-Pathplanner Documentation - https://pathplanner.dev/home.html 
-
-- Pathplanner is a tool for creating Paths and Autos for Autonomous Sequences.
-
-## Git and Github
-
-Installing Git - https://git-scm.com/downloads 
-
-- Git is used to get code you wrote locally on your computer to somewhere it's hosted, in our case Github (There are alternatives like Gitlab or Self-Hosting)
-- You can use the UI in VS Code or, the command line 
-- Git works like a tree where branches are created off of main (the trunk of the tree)
-
-`git pull` - pulls from the current version (the version on Github) of the branch you are on. 
-
-`git push` - pushes your changes to your branch making them viewable on github.
-
-### Github
-
-- Github is what we use to host our code
-- Creating a branch means that you have access to code written in main (or master), and you can pull from main to get updated to the current version
-- A PR or Pull Request, is a request to get your  changes merged into main (or master)
+- Pathplanner (Developed by FRC Team 3015), allows you to map out Autonomous Routines and Paths with a UI.
+    - Pathplanner Download -> https://github.com/mjansen4857/pathplanner -> click Releases
+    - Pathplanner Documentation -> https://pathplanner.dev/home.html 
 
 
 
