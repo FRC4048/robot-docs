@@ -1,4 +1,4 @@
 # Redshift 4048 Documentation
 
-This is the homepage for Redshift's documentation.
+This is the homepage for FRC Team 4048's documentation.
 

@@ -27,6 +27,7 @@ theme:
         name: Switch to light mode
 
 markdown_extensions:
+  - markdown.extensions.extra
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.inlinehilite
@@ -51,6 +52,7 @@ nav:
       - index.md
       - Command Logging: command-logging.md
       - Subsystem Logging: subsystem-logging.md
+      - Resources: resources.md
 extra_css:
   - stylesheets/extra.css
 extra:

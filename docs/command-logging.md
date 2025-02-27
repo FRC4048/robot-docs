@@ -19,7 +19,7 @@
     Right now, command compositions do not work. Each command must be declared in a file. In other words, you can not call `.andThen` or `.withTimeout`.
 
 !!! important
-    Commands can not be reused. They can be scheduled multiple times, but they can not have multiple parents.
+    Commands can not be reused. They can be scheduled multiple times, but they can not have multiple parent commands.
 
 ## How Command Logging works
 
@@ -70,11 +70,11 @@ classDiagram
 ### Let's unpack this
 
 `LoggableCommand` inherits all of WPILib's `Command` functionality. However it differs by keeping track of it parent.
-In many cases, a command will be logged in the root and will have have a parent, if the command is stored in a CommandGroup, then it will know who its parent is. This is important so when we log the commands they can form a tree like structure in the log file. As a result, when looking at the logs in AdvantageScope, Commands are logged in the same hierarchy that they were declared in the code.
+In many cases, a command will be logged in the root and will have have a parent command, if the command is stored in a CommandGroup, then it will know who its parent is. This is important so when we log the commands they can form a tree like structure in the log file. As a result, when looking at the logs in AdvantageScope, Commands are logged in the same hierarchy that they were declared in the code.
 
 #### The Hijacking of `toString()`
 
-We need someway to turn the hierarchy of commands into a path. Moreover, we need to use a method that already of exists in command (you will see why later). Sadly, there are not a lot of options as we need to `Override` a method that is not used for internal shenanigans by WPILib. Luckily, all object have a `toString()` method and it appeared WPILib did not use it for any processing!
+We need some way to turn the hierarchy of commands into a path. Moreover, we need to use a method that already of exists in command (you will see why later). Sadly, there are not a lot of options as we need to `Override` a method that is not used for internal shenanigans by WPILib. Luckily, all object have a `toString()` method and it appeared WPILib did not use it for any processing!
 
 #### Let's examine our Overrode `toString()` method
 
@@ -90,14 +90,14 @@ We need someway to turn the hierarchy of commands into a path. Moreover, we need
   }
 ```
 
-First we get the Parent's path (using `toString()`) and the remove the "/inst" suffix. The results in a path that contains the parent log path minus that actual instance addition of the parent. From this we then append the name of this command along with "/inst" (which is why we had to remove it earlier because the parent did the same thing).
+First we get the Parent's path (using `toString()`) and the remove the "/inst" suffix. The results in a path that contains the parent log path minus that actual instance addition of the parent. From this we then adding on the name of this command along with "/inst" (which is why we had to remove it earlier because the parent did the same thing).
 Because this block of code is in all the commands we use, we get a massive tree of path names that can be logged.
 
 This is great and all but who actually logs the commands?
 
 ### Welcome to the `CommandLoggger`
 
-The `CommandLogger` works by subscribing to some of the events of WPILib's `CommandSchedualer`:
+The `CommandLogger` works by subscribing to some of the events of WPILib's `CommandScheduler`:
 
 1. `onCommandInitalize(Consumer<Command> action)`
 2. `onCommandFinish(Consumer<Command> action)`
