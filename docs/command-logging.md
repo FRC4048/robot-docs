@@ -90,7 +90,7 @@ We need some way to turn the hierarchy of commands into a path. Moreover, we nee
   }
 ```
 
-First we get the Parent's path (using `toString()`) and the remove the "/inst" suffix. The results in a path that contains the parent log path minus that actual instance addition of the parent. From this we then adding on the name of this command along with "/inst" (which is why we had to remove it earlier because the parent did the same thing).
+First we get the Parent's path (using `toString()`) and the remove the "/inst" suffix. The results in a path that contains the parent log path minus that actual instance addition of the parent. From this we then append the name of this command along with "/inst" (which is why we had to remove it earlier because the parent did the same thing).
 Because this block of code is in all the commands we use, we get a massive tree of path names that can be logged.
 
 This is great and all but who actually logs the commands?
