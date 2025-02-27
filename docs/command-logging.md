@@ -21,6 +21,14 @@
 !!! important
     Commands can not be reused. They can be scheduled multiple times, but they can not have multiple parents.
 
+## Customization
+
+By default, commands will be logged using their class name. Specifically, `class.getSimpleName()`.
+
+If you want to have a command with a different name you can call `command.setBasicName()`.
+
+Reasons for this may be if you have a command that is context dependant and want to easily differentiate between its use cases.
+
 ## How Command Logging works
 
 !!! note
@@ -104,3 +112,28 @@ The `CommandLogger` works by subscribing to some of the events of WPILib's `Comm
 3. `onCommandInterupt(Consumer<Command> action)`
 
 On each of these events, we store the recorded state in a queue which then gets logged every tick.
+
+## Advanced Use cases
+
+Sometimes it is convenient to create and schedule and command within another command.
+
+Take the following example, where we create a command that goes to a position.
+
+```java
+public void initalize(){
+  LoggableCommand command = new GoToPoseCommand(drivetrain);
+  command.schedule();
+}
+```
+
+This will work but when we are looking for the command in AdvantageScope, it may make more sense to see the `GoToPoseCommand` listed under the command who called it.
+
+This can be done by calling `command.setParent(this)`.
+
+```java
+public void initalize(){
+  LoggableCommand command = new GoToPoseCommand(drivetrain);
+  command.setParent(this);
+  command.schedule();
+}
+```
