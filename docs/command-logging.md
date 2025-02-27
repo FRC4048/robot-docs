@@ -4,10 +4,10 @@
 
 - When creating a standard command extend `LoggableCommand`
 - When creating a `CommandGroup` extend the corresponding Logged version
-  - `ParallelCommandGroup` :material-arrow-right: `LoggableParallelCommandGroup`
-  - `SequentialCommandGroup` :material-arrow-right: `LoggableSequentialCommandGroup`
-  - `ParallelRaceGroup` :material-arrow-right: `LoggableRaceCommandGroup`
-  - `ParallelDeadlineGroup` :material-arrow-right: `LoggableDeadlineCommandGroup`
+    - `ParallelCommandGroup` :material-arrow-right: `LoggableParallelCommandGroup`
+    - `SequentialCommandGroup` :material-arrow-right: `LoggableSequentialCommandGroup`
+    - `ParallelRaceGroup` :material-arrow-right: `LoggableRaceCommandGroup`
+    - `ParallelDeadlineGroup` :material-arrow-right: `LoggableDeadlineCommandGroup`
 - When using a command provided by another library, you must wrap the command using <br> `LoggableCommandWrapper(Command commandToWrap)`
 
 ### Useful Built-in Commands

@@ -133,4 +133,3 @@ class NeoPidMotorInputProvider{
 ```
 
 Starting off simple, all the `InputProvider` classes do is provide a common interface for retrieving motor information. This bridges the gab between different vendors as there is no common superclass.
-
