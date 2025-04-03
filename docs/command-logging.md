@@ -74,7 +74,7 @@ In many cases, a command will be logged in the root and will have have a parent,
 
 #### The Hijacking of `toString()`
 
-We need someway to turn the hierarchy of commands into a path. Moreover, we need to use a method that already of exists in command (you will see why later). Sadly, there are not a lot of options as we need to `Override` a method that is not used for internal shenanigans by WPILib. Luckily, all object have a `toString()` method and it appeared WPILib did not use it for any processing!
+We need some way to turn the hierarchy of commands into a path. Moreover, we need to use a method that already of exists in command (you will see why later). Sadly, there are not a lot of options as we need to `Override` a method that is not used for internal shenanigans by WPILib. Luckily, all object have a `toString()` method and it appeared WPILib did not use it for any processing!
 
 #### Let's examine our Overrode `toString()` method
 
@@ -97,7 +97,7 @@ This is great and all but who actually logs the commands?
 
 ### Welcome to the `CommandLoggger`
 
-The `CommandLogger` works by subscribing to some of the events of WPILib's `CommandSchedualer`:
+The `CommandLogger` works by subscribing to some of the events of WPILib's `CommandScheduler:
 
 1. `onCommandInitalize(Consumer<Command> action)`
 2. `onCommandFinish(Consumer<Command> action)`
