@@ -133,3 +133,44 @@ class NeoPidMotorInputProvider{
 ```
 
 Starting off simple, all the `InputProvider` classes do is provide a common interface for retrieving motor information. This bridges the gab between different vendors as there is no common superclass.
+
+### Inputs
+
+Inputs contain the actual fields that are being logged.
+
+There are two different ways of creating `LoggableInputs`. The *Legacy* method involves extending `FolderLoggableInputs` and declaring the properties by hand and how they are written and read from the log.
+
+The second method is using one of the prebuilt input classes with customizable parameters that can be selected using the corresponding Builder.
+
+``` mermaid
+classDiagram
+LoggableInputs <|-- FolderLoggableInputs
+FolderLoggableInputs <|-- FolderInputs
+FolderInputs <|-- MotorInputs
+MotorInputs <|-- PidMotorInputs
+
+class LoggableInputs{
+  <<interface>>
+}
+
+class FolderLoggableInputs {
+  +folder: String
+  +getFolder(): String
+}
+class FolderInputs {
+  #process(InputProvider provider): boolean*
+}
+class MotorInputs{
+  encoderPosition: Double
+  encoderVelocity: Double
+  motorCurrent: Double
+  motorTemperature: Double
+  appliedOutput: Double
+  fwdLimit: Boolean
+  revLimit: Boolean
+  builder: MotorInputBuilder<?>
+}
+class PidMotorInputs {
+  getPidSetpoint: Double
+}
+```
