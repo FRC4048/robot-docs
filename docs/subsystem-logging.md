@@ -77,6 +77,8 @@ MotorInputs inputs = new MotorInputBuilder<>("FooSubsystem")
   .build();
 ```
 
+`inputs` will then be in charge of logging `encoderVelocity`, `motorTemperature`, and `encoderVelocity` under the path `LoggableInputs/FooSystem/`.
+
 Assuming the IO is passed in via `RobotContainer`, a new `LoggableSystem` can be constructed with
 
 ```java
@@ -151,6 +153,8 @@ MotorInputs <|-- PidMotorInputs
 
 class LoggableInputs{
   <<interface>>
+  +toLog(LogTable table)
+  +fromLog(LogTable table)
 }
 
 class FolderLoggableInputs {
@@ -174,3 +178,5 @@ class PidMotorInputs {
   getPidSetpoint: Double
 }
 ```
+
+Every `FolderInputs` (and subclasses) are in charge of logging the values that were selected using the builder.
