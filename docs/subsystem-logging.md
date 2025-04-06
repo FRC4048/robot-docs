@@ -189,13 +189,14 @@ Similar to Command Logging, we want to maintain a tree like structure for our In
 `FolderLoggableInputs` takes in a folder that is describes the hardware it is logging. You can name this what ever you want but I would recommend just putting the class name of the subsystem.
 
 !!!note
-    This folder can have subfolders separated by a /
+    Logged folder can have subfolders separated by a /
 
 There are two different ways of creating `LoggableInputs`.
 
 The *Legacy* method involves extending `FolderLoggableInputs` and declaring the properties by hand and how they are written and read from the log.
 
 The second method is using one of the prebuilt input classes with customizable parameters that can be selected using the corresponding Builder.
+
 If using [method 2](#method-2) you can use one of the prebuilt `FolderInputs` classes.
 
 ``` mermaid
