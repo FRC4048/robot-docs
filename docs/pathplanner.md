@@ -26,6 +26,14 @@ One way to do this is to create and store all of path following commands in a si
 public class Paths {
     private final Command followFooCommand;
 
+    private static Paths instance;
+
+    public static Paths getInstance() {
+        if (instance == null) {
+            instance = new Paths();
+        }
+        return instance;
+    }
     public Paths(){
         try {
             followFooCommand = AutoBuilder.followPath(PathPlannerPath.fromPathFile("fooPath"));
