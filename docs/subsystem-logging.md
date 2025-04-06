@@ -107,7 +107,7 @@ public class FooInputs extends FolderLoggableInputs {
 }
 ```
 
-#### Recommended Method 
+#### Recommended Method
 
 The Inputs types listed above all have a `Builder` which can be used to construct an input with different loggable attributes.
 
