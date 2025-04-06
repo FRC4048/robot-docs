@@ -180,3 +180,141 @@ class PidMotorInputs {
 ```
 
 Every `FolderInputs` (and subclasses) are in charge of logging the values that were selected using the builder.
+
+### InputBuilders
+
+Each InputBuilder is contains methods that set a flag indicating if the user wants to log a specific value. For example `MotorInputBuilder#encoderPosition` sets a boolean to `true` indicating that the `encoderPosition` should be logged.
+
+``` mermaid
+classDiagram
+MotorInputBuilder~T extends MotorInputBuilder~ <|-- PidMotorInputBuilder~T extends PidMotorInputBuilder~
+class PidMotorInputBuilder ~T extends PidMotorInputBuilder~{
+  +logPidSetpoint(): T 
+  +build(): PidMotorInputs
+}
+
+class MotorInputBuilder ~T extends MotorInputBuilder~ {
+  +logEncoderPosition(): T
+  +logEncoderVelocity(): T
+  +logMotorCurrent(): T
+  +logMotorTemperature(): T 
+  +logFwdLimit(): T          
+  +logRevLimit(): T          
+  +logAppliedOutput(): T     
+  +reset(): T
+  +addAll(): T
+  +build(): MotorInputs
+  ~self(): T
+}
+```
+
+!!! note
+    There are also getters for the boolean values to check what is being logged.
+
+You probably noticed the strange generic types used in the class diagram. This pattern is called [Curiously recurring template pattern (CRTP)](https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern). This pattern helps us create extendable builders.
+
+Here is a quick overview.
+
+#### CRTP
+
+Consider two classes `Foo` and `FooBar`
+
+``` java
+public class Foo {
+  private final boolean fooing;
+
+  public Foo(boolean fooing){
+    this.fooing = fooing;
+  }
+}
+
+public class FooBar extends Foo {
+  private final boolean baring;
+
+  public FooBar(boolean fooing, boolean baring){
+    super(fooing);
+    this.baring = baring;
+  }
+}
+```
+
+To create these two classes you create two Builders
+
+``` java
+public class FooBuilder {
+    protected boolean fooing = false;
+
+    public FooBuilder setFooing(boolean fooing){
+        this.fooing = fooing;
+    }
+    public Foo build(){
+        return new Foo(fooing);
+    }
+}
+
+public class FooBarBuilder extends FooBuilder {
+    protected boolean baring = false;
+
+    public FooBarBuilder setBaring(boolean baring){
+        this.baring = baring;
+    }
+
+    public FooBar build(){
+        return new FooBar(fooing, baring);
+    }
+}
+```
+
+This implementation would **work**. However, the users would have to call the methods in a specific order
+
+```java
+// This works
+FooBar foobar1 = new FooBarBuilder()
+    .setBaring(true)
+    .build();
+// This works (you need to cast)
+FooBar fooBar2 = (FooBar)(new FooBarBuilder()
+    .setBaring(true)
+    .setFooing(true)
+    .build());
+
+// This will throw an error!
+FooBar fooBar2 = new FooBarBuilder()
+    .setFooing(true)
+    .setBaring(true)
+    .build();
+```
+
+Creating `fooBar1` and `fooBar2` will run without issue but creating  will compile with no issues. However, `foodBar3` will not compile because `the method setBaring(boolean) is undefined for the type FooBuilder`.
+
+**What?** I though we created a `FooBarBuilder`. There in lies the problem. The `setFooing(boolean fooing)` method returns a `FooBuilder` which does not have the method `setBaring(boolean baring)`.
+
+This is where generic types come into play. If `FooBuilder` can return a subclass when we call its setter methods, we can continue to use the methods defined in the subclass.
+
+Here is the class declaration for both `MotorInputBuilder` and `PidMotorInputBuilder`
+
+```java
+public class MotorInputBuilder<T extends MotorInputBuilder<T>>
+public class PidMotorInputBuilder<T extends PidMotorInputBuilder<T>> extends MotorInputBuilder<T> {
+```
+
+Both classes have a generic type `T` which is a subtype of the current class.
+
+Each builder method returns a type `T`. Each method returns the result of calling the `self()` method which will return the current object casted to what ever the subclass created is.
+
+```java
+T self() {         
+  return (T) this; 
+}                  
+```
+
+For example:
+
+```java
+public T encoderPosition() { 
+  logEncoderPosition = true; 
+  return self();             
+}                            
+```
+
+This means that if when I create an instance of `PidMotorInputBuilder` and call the super class's method `encoderPosition` I will get back the `PidMotorInputBuilder` instance.
