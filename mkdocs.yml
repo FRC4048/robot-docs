@@ -51,6 +51,7 @@ nav:
       - index.md
       - Command Logging: command-logging.md
       - Subsystem Logging: subsystem-logging.md
+      - PathPlanner: pathplanner.md
 extra_css:
   - stylesheets/extra.css
 extra:

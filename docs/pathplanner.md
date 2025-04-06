@@ -1,0 +1,55 @@
+# PathPlanner
+
+This section is more of a list of tips and tricks. Just because these work now does not mean they will work in the future.
+!!! note
+    For PathPlanner specific documentation see [here](https://pathplanner.dev/home.html).
+
+So you want to build an autonomous sequence...
+
+## Organization
+
+First imagine what path you envision the robot taking. Then, split the sequence into smaller segments. These will be your `Paths`. Although the division is arbitrary, I suggest separating the sequence into paths that each have an important *action* (like pickup, shoot, etc).
+
+Once you have created the paths, you can combine them together into an `Auto`.
+!!! important
+    The `Auto` tab in pathplanner can be used for visualization but all autos MUST be explicitly declared in the java code.
+
+When you create a new `Auto` it will act as a `SequentialCommandGroup`. You can then embed other command groups and path following commands to build out your autonomous sequence.
+
+## Loading Paths in Code
+
+Paths are loaded when constructed. The loading time is significant so Paths should be created as soon as possible.
+
+One way to do this is to create and store all of path following commands in a singleton
+
+``` java
+public class Paths {
+    private final Command followFooCommand;
+
+    public Paths(){
+        try {
+            followFooCommand = AutoBuilder.followPath(PathPlannerPath.fromPathFile("fooPath"));
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Command getFollowFooCommand(){
+        return followFooCommand;
+    }
+    
+}
+```
+
+## Creating Autos In Code
+
+Create a new command that extends `LoggableSequentialCommandGroup`.
+
+To use a path following command,
+
+``` java
+new LoggableCommandWrapper(Paths.getInstance().getFollowFooCommand());
+```
+
+!!! note
+    The reason we don't store the wrapped command in `Paths` is because it would not have the correct parent command by default.
