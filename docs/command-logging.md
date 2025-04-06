@@ -69,7 +69,7 @@ classDiagram
 
 ### Let's unpack this
 
-`LoggableCommand` inherits all of WPILib's `Command` functionality. However it differs by keeping track of it parent.
+`LoggableCommand` inherits all of WPILib's [`Command`](https://docs.wpilib.org/en/stable/docs/software/commandbased/commands.html) functionality. However it differs by keeping track of it parent.
 In many cases, a command will be logged in the root and will have have a parent, if the command is stored in a CommandGroup, then it will know who its parent is. This is important so when we log the commands they can form a tree like structure in the log file. As a result, when looking at the logs in AdvantageScope, Commands are logged in the same hierarchy that they were declared in the code.
 
 #### The Hijacking of `toString()`
@@ -97,7 +97,7 @@ This is great and all but who actually logs the commands?
 
 ### Welcome to the `CommandLoggger`
 
-The `CommandLogger` works by subscribing to some of the events of WPILib's `CommandScheduler:
+The `CommandLogger` works by subscribing to some of the events of WPILib's [`CommandScheduler`](https://docs.wpilib.org/en/stable/docs/software/commandbased/command-scheduler.html):
 
 1. `onCommandInitalize(Consumer<Command> action)`
 2. `onCommandFinish(Consumer<Command> action)`

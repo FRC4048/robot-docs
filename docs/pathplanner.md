@@ -16,7 +16,7 @@ Once you have created the paths, you can combine them together into an `Auto`.
 !!! important
     The `Auto` tab in pathplanner can be used for visualization but all autos MUST be explicitly declared in the java code.
 
-When you create a new `Auto` it will act as a `SequentialCommandGroup`. You can then embed other command groups and path following commands to build out your autonomous sequence.
+When you create a new `Auto` it will act as a [`SequentialCommandGroup`](https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj2/command/SequentialCommandGroup.html). You can then embed other command groups and path following commands to build out your autonomous sequence.
 
 ### Loading Paths in Code
 

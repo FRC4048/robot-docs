@@ -2,7 +2,7 @@
 
 You can treat this as a migration guide between the base AdvantageKit and our implementation.
 !!! note
-    this documentation assumes you are familiar with AdvantageKit
+    This documentation assumes you are familiar with [AdvantageKit](https://docs.advantagekit.org/getting-started/what-is-advantagekit/)
 
 ## How to log a Subsystem
 
@@ -121,7 +121,7 @@ MotorInputs inputs = new MotorInputBuilder<>("FooSubsystem")
   .build();
 ```
 
-`inputs` will then be in charge of logging `encoderVelocity`, `motorTemperature`, and `encoderVelocity` under the path `LoggableInputs/FooSystem/`.
+The `inputs` will then be in charge of logging `encoderVelocity`, `motorTemperature`, and `encoderVelocity` under the path `LoggableInputs/FooSystem/`.
 
 Assuming the IO is passed in via `RobotContainer`, a new `LoggableSystem` can be constructed with
 
@@ -186,10 +186,10 @@ Inputs contain the actual fields that are being logged.
 
 There are two different ways of creating `LoggableInputs`.
 
-The *Legacy* method involves extending `FolderLoggableInputs` and declaring the properties by hand and how they are written and read from the log.
+The *Legacy method* involves extending `FolderLoggableInputs` and declaring the properties by hand and how they are written and read from the log.
 
-The second method is using one of the prebuilt input classes with customizable parameters that can be selected using the corresponding Builder.
-If using [method 2](#method-2) you can use one of the prebuilt `FolderInputs` classes.
+The *recommended method* is using one of the prebuilt input classes with customizable parameters that can be selected using the corresponding Builder.
+If using the [*recommended method*](#method-2) you can use one of the prebuilt `FolderInputs` classes.
 
 ``` mermaid
 classDiagram
