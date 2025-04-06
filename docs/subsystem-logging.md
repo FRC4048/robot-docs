@@ -144,6 +144,36 @@ There are two different ways of creating `LoggableInputs`. The *Legacy* method i
 
 The second method is using one of the prebuilt input classes with customizable parameters that can be selected using the corresponding Builder.
 
+#### Method 1
+
+Create a subclass of `FolderLoggableInputs` and then follow the example below to write to and from the log.
+
+```java
+public class FooInputs extends FolderLoggableInputs {
+
+    public boolean value = false;
+
+    public FooInputs(String key){
+        super(key);
+    }
+
+
+    @Override
+    public void toLog(LogTable table) {
+        table.put("value", value);
+    }
+
+    @Override
+    public void fromLog(LogTable table) {
+        value = table.get("value", value);
+    }
+}
+```
+
+#### Method 2
+
+Use one of the prebuilt `FolderInputs` classes.
+
 ``` mermaid
 classDiagram
 LoggableInputs <|-- FolderLoggableInputs
