@@ -6,7 +6,11 @@ You can treat this as a migration guide between the base AdvantageKit and our im
 
 ## How to log a Subsystem
 
-Instead creating Inputs for each IO collection, a builder is used to create and an input object that has all of the desired fields.
+There are two methods for logging a subsystem.
+
+The **Legacy method** involves extending `FolderLoggableInputs` and declaring the properties and how they are written and read from the log by hand.
+
+The **recommended method** is using one of the prebuilt input classes with customizable parameters that can be selected using the corresponding Builder.
 
 ### LoggableIO implementation
 
@@ -18,6 +22,7 @@ Motors with PID :material-arrow-right: `PidMotorInputs`
 
 ### RealIO implementation
 
+If using the **recommended method**
 The RealIO must have an `InputProvider` that matches the corresponding `Input` type.
 
 `MotorInputs` :material-arrow-right: `MotorInputProvider`
@@ -48,10 +53,19 @@ public class RealFooIO implements FooIO {
 }
 ```
 
+If using the **legacy method** you have to manually update the inputs.
+
+``` java
+@Override
+public updateInputs(FooInputs inputs){
+    fooInputs.value = true;
+}
+```
+
 ### Subsystem implementation
 
 !!! note
-    each IO collection should be in charge of at most one piece of hardware. However you may have multiple IO collections per Subsystem
+    Each IO collection should be in charge of at most one piece of hardware. However you may have multiple IO collections per Subsystem
 
 In the Subsystem, IO interfaces and inputs are stored through a `LoggableSystem`. The `LoggableSystem` provides a consistent way of accessing both the IO interface's methods, and the Inputs.
 
@@ -64,6 +78,36 @@ class LoggableSystem{
 ```
 
 #### Building the Inputs
+
+As mentioned above there are two different ways of create inputs.
+
+#### Legacy Method
+
+Create a subclass of `FolderLoggableInputs` and then follow the example below to write to and from the log.
+
+```java
+public class FooInputs extends FolderLoggableInputs {
+
+    public boolean value = false;
+
+    public FooInputs(String key){
+        super(key);
+    }
+
+
+    @Override
+    public void toLog(LogTable table) {
+        table.put("value", value);
+    }
+
+    @Override
+    public void fromLog(LogTable table) {
+        value = table.get("value", value);
+    }
+}
+```
+
+#### Recommended Method 
 
 The Inputs types listed above all have a `Builder` which can be used to construct an input with different loggable attributes.
 
@@ -140,39 +184,12 @@ Starting off simple, all the `InputProvider` classes do is provide a common inte
 
 Inputs contain the actual fields that are being logged.
 
-There are two different ways of creating `LoggableInputs`. The *Legacy* method involves extending `FolderLoggableInputs` and declaring the properties by hand and how they are written and read from the log.
+There are two different ways of creating `LoggableInputs`.
+
+The *Legacy* method involves extending `FolderLoggableInputs` and declaring the properties by hand and how they are written and read from the log.
 
 The second method is using one of the prebuilt input classes with customizable parameters that can be selected using the corresponding Builder.
-
-#### Method 1
-
-Create a subclass of `FolderLoggableInputs` and then follow the example below to write to and from the log.
-
-```java
-public class FooInputs extends FolderLoggableInputs {
-
-    public boolean value = false;
-
-    public FooInputs(String key){
-        super(key);
-    }
-
-
-    @Override
-    public void toLog(LogTable table) {
-        table.put("value", value);
-    }
-
-    @Override
-    public void fromLog(LogTable table) {
-        value = table.get("value", value);
-    }
-}
-```
-
-#### Method 2
-
-Use one of the prebuilt `FolderInputs` classes.
+If using [method 2](#method-2) you can use one of the prebuilt `FolderInputs` classes.
 
 ``` mermaid
 classDiagram
