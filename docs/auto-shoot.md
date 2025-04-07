@@ -5,11 +5,11 @@ There are two approaches to calculating a desired shooting angle:
 1. Interpolate between measured data points.
 2. Physics Based simulation.
 
-Both have there pros and cons:
+Both have their pros and cons:
 
 ## Why Use Interpolation
 
-This method should be used when you have a complex trajectory that is hard to model with physics equations. If your trajectory parabolic or linear you might want to consider using a [Physics Model](#why-use-a-physics-model).
+This method should be used when you have a complex trajectory that is hard to model with physics equations. If your trajectory is parabolic or linear you might want to consider using a [Physics Model](#why-use-a-physics-model).
 
 The main *advantage* of Interpolation is its simplicity.
 The main *disadvantage* of Interpolation is that the robot must be stationary.
@@ -42,6 +42,8 @@ If I then want to know what angle to shoot at when we are 1.5 meters away, the `
 
 ### Projectile Motion
 
+!!! important
+    For a deeper explanation of the math see the [presentation](https://docs.google.com/presentation/d/1C3Zrz4nMrskZdTj3XkqiU0yrXnFCWz1SGjXfObQNPAk/edit?usp=sharing)
 Here is the equation for calculating shooting angle
 
 $$
@@ -56,7 +58,8 @@ $$
 
 It is important to note that this equation is for 2D space. "But we are in 3D I hear you ask". Well no worries. We can convert our 3D environment in 2D by rotating the robot so it faces the target.
 
-Given our 3D coord (x,y,z) we combine x and y into one variable $x^\prime$ and our z value becomes $y^\prime$
+Given our 3D coordinates (x,y,z) we combine x and y into one variable $x^\prime$ and our z value becomes $y^\prime$
+
 Now if we take find the distance in the xy plane.
 
 $(x,y,z)$ :material-arrow-right: $\sqrt{x^2 + y^2}$ :material-arrow-right: $y^\prime$
@@ -85,7 +88,7 @@ Now you can use $x=vt$ to solve for v and get an initial velocity in $\frac{mete
 
 Congratulations you have everything you need to run a basic physics simulation!
 
-Now it would be rude to make you code all of that your self so I have created some utility classes to help you.
+Now it would be rude to make you code all of that yourself, so I have created some utility classes to help you.
 
 ### Vector Utils
 
@@ -97,7 +100,7 @@ A `VelocityVector` has a `double velocity` and a `Rotation2d angle`
 
 This function takes in a `VelocityVector` and returns how far the projectile would theoretically go before hitting the ground.
 
-This function can be used to check what portion of the trajectory you are hitting your target. For example in Crescendo we said we could only shoot if the trajectory arrived at the target in the first 2/5 of the trajectory. This was to prevent hitting the target from above because the target have a roof we have to shoot under.
+This function can be used to check what portion of the trajectory you are hitting your target. For example in Crescendo, we said we could only shoot if the trajectory arrived at the target in the first 2/5 of the trajectory. This was to prevent hitting the target from above because the target have a roof we had to shoot under.
 
 ``` java
 public static double horizontalRange(VelocityVector velocityVector) {
@@ -109,7 +112,7 @@ public static double horizontalRange(VelocityVector velocityVector) {
 
 This function generates a `VelocityVector` from an initial `speed`, an `deltaX` from the target, a `deltaY` from the target and a `maxFractionalRange` (used in the [horizontal range function](#horizontalrange-function))
 
-This methods Implementation a variation of the math [above](#physics-model-implementation)
+This methods implements a variation of the math [above](#physics-model-implementation)
 
 ``` java
 public static VelocityVector fromVelAndDist(double speed, double deltaX, double deltaY, double maxFractionalRange) {
