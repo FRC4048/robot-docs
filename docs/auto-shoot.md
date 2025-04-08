@@ -130,7 +130,19 @@ Before I answer that Let's Take a step back and look at how movement effects sco
 
 When the robot is moving it has some `xVelocity` and some `yVelocity` the game piece then *inherits* the robotics velocity towards its initial shooting velocity.
 
-This is problematic because we have to add the robotics velocity vector with the game piece's initial velocity vector however we don't know the angle we are shooting at yet!
+The portion of the robot's velocity that impacts the game piece's velocity can be found by calculating what portion of the velocity moves the robot closer or farther away from the target. That is to say movement around the target in 3D space what does not get the robot closer to the target is not important to the game piece's velocity.
+
+Here is how we find that velocity
+
+1. Subtract target position vector from robot position vector and normalize it
+2. Take the dot product of the robotics velocity vector and the normalized vector.
+Lets call this our `i-velocity`
+!!! note
+    The `i-velocity` was not properly implemented in 2024's game Crescendo.
+
+First we need to find what portion of the `i-velocity` impacts the game piece's velocity. The portion of the robots velocity that effects
+
+This is problematic because we have to add the `i-velocity` vector with the game piece's initial velocity vector however we don't know the angle we are shooting at yet!
 
 In other words we cant add the vectors until we know the angle we are shooting and we can't find the angle we are shooting until we add the vectors.
 
@@ -148,7 +160,7 @@ You heard me, guess.
 
 Let's guess we are shooting at a `45 degree` angle.
 
-This then allows us to add our robots velocity to our initial velocity.
+This then allows us to add our `i-velocity` to our initial velocity.
 
 ``` java
 double xySpeed = (Math.cos(45) * speed) + driveSpeedX;
@@ -165,7 +177,7 @@ Finally, we calculate the shooting velocity by calling [`fromVelAndDist`](#fromv
 
 But our solution is wrong you might ask. And you would be correct.
 
-The solution is **TO DO IT AGAIN**. Except this time use the angle we got from the previews step to add the robot velocity to the initial piece velocity.
+The solution is **TO DO IT AGAIN**. Except this time use the angle we got from the previews step to add the `i-velocity` to the initial piece velocity.
 
 You can keep repeating this to get more and more accurate results.
 
