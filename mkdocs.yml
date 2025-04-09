@@ -53,6 +53,7 @@ nav:
       - Subsystem Logging: subsystem-logging.md
       - PathPlanner: pathplanner.md
       - Auto Shooting: auto-shoot.md
+      - Apriltag Vision: apriltag-vision.md
 extra_css:
   - stylesheets/extra.css
   - https://unpkg.com/katex@0/dist/katex.min.css
