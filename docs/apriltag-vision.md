@@ -119,7 +119,7 @@ Here is the logic of the Filter
 
 This filter in effect requires two vision measurements to change in relatively the same manner as the wheels do.
 
-#### Vision Truster
+### Calculate Trust
 
 I told you we would be back to `FilterablePoseManager`.
 
@@ -153,11 +153,12 @@ public class FilterablePoseManager extends PoseManager {
 
 As you can see in the `ACCEPTED` case statement, we are setting called `setVisionSTD` and passing in the result of calculating how much we trust the measurement.
 
-!!! note
-    `setVisionSTD` actually takes in the `variance` which is the **square** of the standard deviation. (Remember when I said it was a tangled mess of laundry).
-
 In the code we have a couple of `VisionTruster` classes:
 
 - `ConstantVisionTruster` - does **not** change trust based on the measurement's distance to the apriltag.
 - `LinearVisionTruster` - changes trust proportionally to the measurement's distance to the apriltag.
 - `SquareVisionTruster` - changes trust proportionally to the measurement's distance to the apriltag **squared**
+
+### Calculating Robot Position
+
+Every tick the robot pose is updated with wheel odometry. Every tick we also process incoming vision measurements. If a measurement passes through all the filters it is added to the [SwerveDrivePoseEstimator](https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/estimator/SwerveDrivePoseEstimator.html) via `PoseManager#addVisionMeasurement(VisionMeasurment VisionMeasurment)`.
