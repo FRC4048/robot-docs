@@ -2,14 +2,29 @@
 
 This documentation is only for the **robot code** side of vision. Anything that relates to ROS or the raspberry PI will be documented somewhere else.
 
-## Receiving Vision Data
+## Pose Estimation
+
+Talk about a big topic.
+!!! warning
+    This code is a mess! When you put your clothes in the laundry they toss and tumble. You then have to untangle them before putting them in the drier. That is what this code code needs to be untangled and dried.
+
+With that out of the way, Lets talk Pose estimation.
+
+``` mermaid
+flowchart LR
+    step1[Receive Vision Data] --> step2[Filter out bad data];
+    step2 --> step3[Calculate trust];
+    step3 --> step4[Calculate new Position];
+```
+
+### Receiving Vision Data
 
 Due to limitations in the throughput of network table traffic, we implemented a custom TCP protocol for relaying vision measurements from the raspberry PI to the roborio.
 
 !!! note
     In hindsight, implementing a custom network protocol is a bit overkill and if anyone wants project to work on you can look into converting to using `Protobuf`.
 
-### TCP Socket
+#### TCP Socket
 
 ```mermaid
 classDiagram
@@ -35,21 +50,6 @@ Let's Go through the logic of this class.
 
 !!! important
     `TCPServer` can be used for non-vision related tasks. Since it can read any type (that can be sent over a TCP socket) you can extend the class to take in a variety of data types.
-
-## Pose Estimation
-
-Talk about a big topic.
-!!! warning
-    This code is a mess! When you put your clothes in the laundry they toss and tumble. You then have to untangle them before putting them in the drier. That is what this code code needs to be untangled and dried.
-
-With that out of the way, Lets talk Pose estimation.
-
-``` mermaid
-flowchart LR
-    step1[Receive Vision Data] --> step2[Filter out bad data];
-    step2 --> step3[Calculate trust];
-    step3 --> step4[Calculate new Position];
-```
 
 We covered [step 1](#receiving-vision-data) above so Let's talk about filtering.
 
@@ -119,7 +119,7 @@ Here is the logic of the Filter
 
 This filter in effect requires two vision measurements to change in relatively the same manner as the wheels do.
 
-### Vision Truster
+#### Vision Truster
 
 I told you we would be back to `FilterablePoseManager`.
 
@@ -160,4 +160,4 @@ In the code we have a couple of `VisionTruster` classes:
 
 - `ConstantVisionTruster` - does **not** change trust based on the measurement's distance to the apriltag.
 - `LinearVisionTruster` - changes trust proportionally to the measurement's distance to the apriltag.
-- `SquareVisionTruster` - changes trust proportionally to the measurement's distance to the apriltag **squared**.
+- `SquareVisionTruster` - changes trust proportionally to the measurement's distance to the apriltag **squared**
